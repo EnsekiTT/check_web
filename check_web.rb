@@ -10,7 +10,7 @@ TARGET_CSV = CURRENT + "target.csv" #STDIN.gets
 TEMP = CURRENT + "temp/"
 ARCHIVE = CURRENT + "archive/"
 
-def show(msg, address)
+def slack(msg, address)
   slack = Slack::Incoming::Webhooks.new ENV["WEBHOOK_URL"]
 
   attachments = [{
@@ -48,7 +48,7 @@ csv_data.each do |data|
        last = f.read
        @diffs = Diffy::Diff.new(last, current)
        if @diffs.to_s.length > 0 then
-	 show(@diffs.to_s, data["address"])
+	        slack(@diffs.to_s, data["address"])
        end
      end
   end
